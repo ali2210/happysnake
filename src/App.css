@@ -1,0 +1,280 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.Ui-menu{
+    position: relative;
+    top: -16pc;
+}
+
+.Launch-btn{
+
+    position: relative;
+    top: -13pc;
+    border-radius: 6pc;
+    box-shadow: 2px 3px slategrey;
+}
+
+.S-Head{
+    position : relative;
+    top : -1pc;
+    left : 4pc;
+    height : 1pc;
+    width : 1pc;
+    background : black;
+    border-radius : 2pc;
+}
+
+.S-Body{
+    position : relative;
+    top :-1.96pc;
+    left:3.9pc;
+    height:0.89pc;
+    width:0.33pc;
+    background:black;
+}
+.Stomach{
+        position : relative;
+        top : -2.8pc;
+        left : 3.52pc;
+        height : 0.82pc;
+        width : 0.33pc;
+        background:black;
+}
+
+
+.Tail-0{
+    position : relative;
+    top : -3.61pc;
+    left : 3.02pc;
+    height : 0.68pc;
+    width : 0.33pc;
+    border : 1px red dashed;
+    background : firebrick;
+}
+
+.Tail-1{
+    position : relative;
+    top : -4.40pc;
+    left : 2.80pc;
+    height : 0.65pc;
+    width : 0.33pc;
+    border : 1px red dashed;
+    background : firebrick;
+}
+
+.Tail-2{
+    position : relative;
+    top : -5.18pc;
+    left : 2.40pc;
+    height : 0.65pc;
+    width : 0.25pc;
+    border : 1px black dotted;
+    background : black;
+}
+
+.Tail-3{
+
+    position: relative;
+    top : -5.95pc;
+    left : 2.5pc;
+    height : 0.65pc;
+    width : 0.20pc;
+    border : 1px black dotted;
+    background : black;
+}
+
+.Tail-4{
+
+    position: relative;
+    top : -6.67pc;
+    left : 2.2pc;
+    width : 0.1pc;
+    height : 0.5pc;
+    border : 1px black dotted;
+    background : black;
+}
+
+.L-Eye{
+    position : absolute;
+    width : 0.2pc;
+    height : 0.2pc;
+    background: white;
+    left : 7px;
+    top : 4px;
+}
+
+.R-Eye{
+    position : absolute;
+    width : 0.2pc;
+    height : 0.2pc;
+    background: white;
+    left : 7px;
+    top : 10px;
+}
+
+.Tongue{
+    position : absolute;
+    width : 1pc;
+    height : 0.3pc;
+    background: red;
+    left : 18px;
+    top : 6px;
+    border-radius : 1pc;
+}
+
+.Snake{
+    position : relative;
+    top : -29pc;
+    left : -4pc;
+    visibility : hidden;
+    transform : rotateZ(0deg)
+}
+
+.Area{
+
+    position: relative;
+    top: -41pc;
+    color: floralwhite;
+    font-size: x-large;
+    visibility: hidden;
+}
+
+.HighScore{
+
+    position: inherit;
+    top: 0pc;
+    left: 20pc;
+}
+
+.Score{
+
+    position: inherit;
+    top: -2.7pc;
+    left: -20pc;
+}
+.Distance{
+
+    position: absolute;
+    left: 22pc;
+    top: -1pc;
+    box-shadow: 2px 2px slategrey;
+}
+
+.Extras{
+
+
+    position: relative;
+    top: -10pc;
+    color: floralwhite;
+    font-size: medium;
+    visibility : hidden;
+}
+
+.F1{
+
+    position: relative;
+    width: 1pc;
+    height: 1pc;
+    background: red;
+    top: -40pc;
+    border-radius: 1pc;
+    left: 2pc;
+    visibility: hidden;
+
+}
+
+.Status{
+
+    position: relative;
+    top: -6pc;
+    color: floralwhite;
+}
+
+.Sound{
+    position: relative;
+    top: -35pc;
+    left: 5pc;
+    color : floralwhite;
+    border-radius : 2pc;
+    background: lightslategray;
+    visibility : visible;
+}
+
+.Top10{
+
+
+    position: relative;
+    top: -21pc;
+    left: -44pc;
+    color : floralwhite;
+    border-radius : 2pc;
+    background: lightslategray;
+    visibility : visible;
+
+}
+
+.Help{
+
+    position: relative;
+    top: -56pc;
+    left: -39pc;
+    color : floralwhite;
+    border-radius : 2pc;
+    background: lightslategray;
+    visibility : visible;
+}
+.Quit{
+
+    position: relative;
+    top: -21pc;
+    left: 38pc;
+    color : floralwhite;
+        border-radius : 2pc;
+        background: lightslategray;
+        visibility : visible;
+}
+
+.Collect{
+
+    position: relative;
+    top: -8pc;
+    font-size: large;
+    color: floralwhite;
+
+}
