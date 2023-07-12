@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import useSound from 'use-sound';
 import popUp from './stories_sounds_pop-up-on.mp3';
@@ -11,8 +11,11 @@ import startOn from './chime .mp3';
 import snakeRattle from './snake-rattling.mp3';
 
 
-
 function App() {
+
+
+  const scoreBoard = new Map();
+  const [serial , setSerial] = useState(0);
 
   const [playGame, setPlayGame] = useState(false);
   const [stepLeftTakes, setStepLeftTakes] = useState(0);
@@ -26,10 +29,10 @@ function App() {
   const [isAlive , setIsAlive] = useState(false);
 
   const [totalArea, setTotalArea] = useState(0);
-  const [highScore, setHighScore] = useState(1000);
+  const [highScore, setHighScore] = useState(5);
   const [Score,setScore] = useState(0);
   const [Status, setStatus] = useState(" ");
-  const [neo4jconn, setNeo4jConn] = useState(false);
+
 
 
   const [MusicOn, setMusicOn] = useState(false);
@@ -42,6 +45,80 @@ function App() {
 
   const [beatPerSec , setBeatPerSec] = useState(0);
   const [Rattle] = useSound(snakeRattle, {volume : 1, beatPerSec});
+
+  const [isMetaMaskInstalled, setIsMetaMaskInstalled] = useState(true);
+  const [metamaskAddress, setMetaMaskAddress] = useState(null);
+  const [isConnect, setIsConnect] =  useState(false);
+  const [zeroBalance, setZeroBalance] = useState(false);
+  const [makeTnxState, setMakeTnxState] = useState(false);
+
+  const { ethereum } = window;
+
+  useEffect(() => {
+    const {ethereum} = window;
+    const MetaMaskStatus = async() => {
+
+        if (!ethereum){
+            setIsMetaMaskInstalled(false);
+        }
+         setIsMetaMaskInstalled(true);
+         console.log("MetaMask Active" );
+    };
+    MetaMaskStatus();
+  }, []);
+
+
+
+    const ConnectMetamaskInterface = async() => {
+
+        try{
+
+                    const {ethereum} = window;
+                    if (!isMetaMaskInstalled && !ethereum){
+                        alert("MetaMask not installed on your browser ... Visit metamask.io");
+                    }
+
+                    const accounts = await ethereum.request({
+                        method : 'eth_requestAccounts'
+                    });
+
+                    console.log("Account =", accounts[0]);
+
+                    setMetaMaskAddress(accounts[0]);
+                    setIsConnect(true);
+
+                    const balance = await ethereum.request({
+                        method: "eth_getBalance",                                      /* New */
+                        params: [accounts[0], "latest"],
+                    });
+
+                    console.log(" Balance = ", balance[0]);
+                    balance[0] > 0 ? setZeroBalance(balance[0]) : setZeroBalance(setZeroBalance);
+
+                    if (zeroBalance - (0.16+0.01) > 0) {
+
+                        alert('Make transaction @ 0x55057eb78fDbF783C961b4AAd6A5f8BC60cab44B');
+                        document.body.children[1].children[0].children[8].style.visibility = 'visible';
+                        const etherscan_api = require('etherscan-api').init('2TPR8SBVTATJPZR9QFY26216XBCKWAYNFB');
+                        const recBal = etherscan_api.account.balance('0x55057eb78fDbF783C961b4AAd6A5f8BC60cab44B');
+                        recBal.then(function(balanceData){
+                                 console.log(balanceData);
+                        });
+
+
+                    }else{
+                        alert('Your Account have low balance ... Buy some ethereum then try...');
+                    }
+
+
+        }catch(error){
+            setIsConnect(false);
+        }
+
+
+
+
+    };
 
   return (
     <div className="App">
@@ -65,6 +142,7 @@ function App() {
                         document.body.children[1].children[0].children[6].style.visibility = 'hidden';
                         document.body.children[1].children[0].children[7].style.visibility = 'hidden';
                         document.body.children[1].children[0].children[8].style.visibility = 'hidden';
+                        document.body.children[1].children[0].children[9].style.visibility = 'hidden';
 
 
 
@@ -100,17 +178,19 @@ function App() {
 
                                             setIsAlive(false);
                                             epic();
+                                              if (Score > highScore) {
+                                                    legend();  setHighScore(Score);
+                                                       scoreBoard.set(serial+1,highScore );
+                                                    console.log("Value =", scoreBoard.get(serial));
+                                              }else{
+                                                        setHighScore(Score);
 
-                                        }else {
+                                              }
+                        }else {
                                             setIsAlive(true);
-                                        }
-                        console.log("Status =", Status);
-                        if (Score > highScore) {
-                            legend();
-                            setHighScore(Score);
-                        }else{
-                            setHighScore(1000);
                         }
+                        console.log("Status =", Status);
+
                 }else{
                     setStatus("You Miss the chance ...");
                 }
@@ -140,15 +220,19 @@ function App() {
 
                                               setIsAlive(false);
                                               epic();
-                                          }else {
-                                              setIsAlive(true);
-                                          }
-                          if (Score > highScore) {
-                                                      legend();
-                                                      setHighScore(Score);
-                          }else{
-                                                      setHighScore(1000);
+
+                                              if (Score > highScore) {
+                                                        legend();
+                                                  setHighScore(Score);
+                                                        scoreBoard.set(serial+1,highScore );
+                                                    console.log("Value =", scoreBoard.get(serial));
+                                              }else{
+                                                    setHighScore(Score);
+                                              }
+                          }else {
+                                setIsAlive(true);
                           }
+
                 }else{
                                      setStatus("You Miss the chance ...");
                 }
@@ -176,15 +260,17 @@ function App() {
 
                                         setIsAlive(false);
                                         epic();
-                                    }else {
-                                        setIsAlive(true);
-                                    }
-                    if (Score > highScore) {
-                                                                          legend();
-                                                                          setHighScore(Score);
-                                              }else{
-                                                                          setHighScore(1000);
-                                              }
+                                        if (Score > highScore) {
+                                                    legend();
+                                                   setHighScore(Score);
+                                                scoreBoard.set(serial+1,highScore );
+                                                console.log("Value =", scoreBoard.get(serial));
+                                        }else{
+                                                setHighScore(Score);
+                                        }
+                    }else {
+                          setIsAlive(true);
+                    }
                 }else{
                                      setStatus("You Miss the chance ...");
                 }
@@ -211,17 +297,21 @@ function App() {
 
                                   if (!SnakeAnalysis(isStomachFull)){
 
-                                                                          setIsAlive(false);
-                                                                          epic();
+                                        setIsAlive(false);
+                                        epic();
+                                        if (Score > highScore) {
+                                            legend();
+                                            setHighScore(Score);
+                                            scoreBoard.set(serial+1,highScore );
+                                             console.log("Value =", scoreBoard.get(serial));
+                                        }else{
+
+                                            setHighScore(Score);
+                                        }
                                   }else {
                                                                           setIsAlive(true);
                                   }
-                                  if (Score > highScore) {
-                                                              legend();
-                                                              setHighScore(Score);
-                                  }else{
-                                                              setHighScore(1000);
-                                  }
+
                  }else{
                                       setStatus("You Miss the chance ...");
                  }
@@ -272,9 +362,12 @@ function App() {
             alert('Good bye ! ');
             setPlayGame(false);
         }} onMouseDown = {popUpMusic}><CircumIcon name="logout"/></button>
-        <button className="Top10">
+        <button className="Top10" onClick={ConnectMetamaskInterface}>
             <CircumIcon name="view_board"/>
         </button>
+        <div className="Results">
+               <h2> {scoreBoard.get(serial)} </h2>
+        </div>
     </div>
   );
 }
@@ -357,6 +450,10 @@ function SnakeAnalysis(count) {
         return false;
     }
 }
+
+
+
+
 
 
 export default App;
